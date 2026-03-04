@@ -135,14 +135,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <span class="input-group-text">
                             <i class="bi bi-lock"></i>
                         </span>
-                        <input 
-                            type="password" 
-                            class="form-control" 
-                            id="password" 
-                            name="password" 
-                            placeholder="Masukkan password"
-                            required
-                        >
+                        <div class="password-toggle-wrapper">
+                            <input 
+                                type="password" 
+                                class="form-control" 
+                                id="password" 
+                                name="password" 
+                                placeholder="Masukkan password"
+                                required
+                            >
+                            <button type="button" class="password-toggle" onclick="togglePassword('password')">
+                                <i class="bi bi-eye" id="password-toggle-icon"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
