@@ -338,8 +338,15 @@ $profile_complete = true; // This should be checked from database
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('sidebar_overlay');
-            sidebar.classList.toggle('active');
+            const isActive = sidebar.classList.toggle('active');
             overlay.classList.toggle('active');
+            
+            // Toggle body scroll lock
+            if (isActive) {
+                document.body.classList.add('sidebar-open');
+            } else {
+                document.body.classList.remove('sidebar-open');
+            }
         }
 
         function closeSidebar() {
@@ -347,6 +354,9 @@ $profile_complete = true; // This should be checked from database
             const overlay = document.getElementById('sidebar_overlay');
             sidebar.classList.remove('active');
             overlay.classList.remove('active');
+            
+            // Remove scroll lock from body
+            document.body.classList.remove('sidebar-open');
         }
 
         // Close sidebar when clicking overlay

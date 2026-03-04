@@ -39,6 +39,12 @@ body {
     background-color: var(--light);
     color: var(--dark);
     line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Prevent scroll when sidebar is open on mobile */
+body.sidebar-open {
+    overflow: hidden;
 }
 
 /* ========== LOGIN PAGE ========== */
@@ -830,6 +836,68 @@ tr:hover {
 
     .role-option label i {
         font-size: 1.2rem;
+    }
+}
+
+/* ========== RESPONSIVE GRID ADJUSTMENTS ========== */
+/* Ensure grids stack properly on mobile without content shift */
+
+@media (max-width: 768px) {
+    /* Stack 2-column grids to 1 column */
+    [style*="grid-template-columns: 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+    }
+    
+    /* Stack 3-column grids to 1 column */
+    [style*="grid-template-columns: 1fr 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+    }
+    
+    /* Stack 4-column grids to 2 columns then 1 */
+    [style*="grid-template-columns: repeat(4"] {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    
+    /* Cards should have consistent spacing */
+    .card {
+        margin-bottom: 1rem;
+        width: 100%;
+    }
+    
+    /* Ensure form inputs take full width */
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="tel"],
+    input[type="number"],
+    select,
+    textarea,
+    .form-control {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    /* Tables should scroll horizontally if needed */
+    .table-responsive {
+        overflow-x: auto;
+    }
+    
+    table {
+        width: 100%;
+        min-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    /* On very small screens, stack everything */
+    [style*="grid-template-columns: repeat(2"] {
+        grid-template-columns: 1fr !important;
+    }
+    
+    /* Buttons should be full width on very small screens */
+    button[style*="width: 100%"],
+    .btn {
+        width: 100% !important;
     }
 }
 
