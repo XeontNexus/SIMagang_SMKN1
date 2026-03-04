@@ -24,45 +24,54 @@ $user_role = $_SESSION['user_role'] ?? 'admin';
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 </head>
 <body>
+    <!-- Sidebar Overlay (Mobile) -->
+    <div class="sidebar-overlay" id="sidebar_overlay"></div>
+
     <div class="dashboard-container">
         <!-- Sidebar -->
-        <aside class="sidebar">
+        <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <h3><i class="bi bi-mortarboard"></i> SIMagang</h3>
             </div>
             <ul class="sidebar-menu">
                 <li class="sidebar-menu-item">
-                    <a href="dashboard.php" class="sidebar-menu-link active">
+                    <a href="dashboard.php" class="sidebar-menu-link active" onclick="closeSidebar()">
                         <i class="bi bi-speedometer2"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
                 <li class="sidebar-menu-item">
-                    <a href="users.php" class="sidebar-menu-link">
+                    <a href="users.php" class="sidebar-menu-link" onclick="closeSidebar()">
                         <i class="bi bi-people"></i>
                         <span>Manajemen User</span>
                     </a>
                 </li>
                 <li class="sidebar-menu-item">
-                    <a href="penempatan.php" class="sidebar-menu-link">
+                    <a href="kelas_jurusan.php" class="sidebar-menu-link" onclick="closeSidebar()">
+                        <i class="bi bi-diagram-3"></i>
+                        <span>Kelas & Jurusan</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a href="penempatan.php" class="sidebar-menu-link" onclick="closeSidebar()">
                         <i class="bi bi-diagram-3"></i>
                         <span>Penempatan Siswa</span>
                     </a>
                 </li>
                 <li class="sidebar-menu-item">
-                    <a href="laporan.php" class="sidebar-menu-link">
+                    <a href="laporan.php" class="sidebar-menu-link" onclick="closeSidebar()">
                         <i class="bi bi-file-earmark-bar-graph"></i>
                         <span>Laporan</span>
                     </a>
                 </li>
                 <li class="sidebar-menu-item">
-                    <a href="pengaturan.php" class="sidebar-menu-link">
+                    <a href="pengaturan.php" class="sidebar-menu-link" onclick="closeSidebar()">
                         <i class="bi bi-gear"></i>
                         <span>Pengaturan</span>
                     </a>
                 </li>
                 <li class="sidebar-menu-item">
-                    <a href="profil.php" class="sidebar-menu-link">
+                    <a href="profil.php" class="sidebar-menu-link" onclick="closeSidebar()">
                         <i class="bi bi-person-circle"></i>
                         <span>Profil</span>
                     </a>
@@ -80,6 +89,9 @@ $user_role = $_SESSION['user_role'] ?? 'admin';
         <main class="main-content">
             <!-- Top Navbar -->
             <div class="top-navbar">
+                <button class="hamburger-btn" id="hamburger_btn" onclick="toggleSidebar()">
+                    <i class="bi bi-list"></i>
+                </button>
                 <div class="navbar-title">
                     <h1>Dashboard Admin</h1>
                     <p>Kelola seluruh sistem SIMagang</p>
@@ -326,6 +338,43 @@ $user_role = $_SESSION['user_role'] ?? 'admin';
         table tbody tr:hover {
             background: #F9F9F9;
         }
+
+        body {
+            overflow-x: hidden;
+        }
     </style>
+
+    <!-- Footer -->
+    <footer style="background: var(--primary); color: white; text-align: center; padding: 1rem; font-size: 0.85rem;">
+        <p style="margin: 0;">
+            <strong>SMKN 1 Perhentian Raja</strong> - Sistem Informasi Magang © 2024
+        </p>
+    </footer>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar_overlay');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar_overlay');
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+
+        // Close sidebar when clicking overlay
+        document.getElementById('sidebar_overlay').addEventListener('click', closeSidebar);
+
+        // Close sidebar when pressing Escape
+        document.addEventListener('keydown', function(e) {
+            if(e.key === 'Escape') {
+                closeSidebar();
+            }
+        });
+    </script>
 </body>
 </html>

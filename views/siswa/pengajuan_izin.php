@@ -22,39 +22,42 @@ $user_role = $_SESSION['user_role'] ?? 'siswa';
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 </head>
 <body>
+    <!-- Sidebar Overlay (Mobile) -->
+    <div class="sidebar-overlay" id="sidebar_overlay"></div>
+
     <div class="dashboard-container">
         <!-- Sidebar -->
-        <aside class="sidebar">
+        <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <h3><i class="bi bi-mortarboard"></i> SIMagang</h3>
             </div>
             <ul class="sidebar-menu">
                 <li class="sidebar-menu-item">
-                    <a href="dashboard.php" class="sidebar-menu-link">
+                    <a href="dashboard.php" class="sidebar-menu-link" onclick="closeSidebar()">
                         <i class="bi bi-speedometer2"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
                 <li class="sidebar-menu-item">
-                    <a href="logbook.php" class="sidebar-menu-link">
+                    <a href="logbook.php" class="sidebar-menu-link" onclick="closeSidebar()">
                         <i class="bi bi-journal-text"></i>
                         <span>Logbook</span>
                     </a>
                 </li>
                 <li class="sidebar-menu-item">
-                    <a href="presensi.php" class="sidebar-menu-link">
+                    <a href="presensi.php" class="sidebar-menu-link" onclick="closeSidebar()">
                         <i class="bi bi-calendar-check"></i>
                         <span>Presensi</span>
                     </a>
                 </li>
                 <li class="sidebar-menu-item">
-                    <a href="pengajuan_izin.php" class="sidebar-menu-link active">
+                    <a href="pengajuan_izin.php" class="sidebar-menu-link active" onclick="closeSidebar()">
                         <i class="bi bi-file-earmark-plus"></i>
                         <span>Ajukan Izin</span>
                     </a>
                 </li>
                 <li class="sidebar-menu-item">
-                    <a href="profil.php" class="sidebar-menu-link">
+                    <a href="profil.php" class="sidebar-menu-link" onclick="closeSidebar()">
                         <i class="bi bi-person-circle"></i>
                         <span>Profil</span>
                     </a>
@@ -72,6 +75,9 @@ $user_role = $_SESSION['user_role'] ?? 'siswa';
         <main class="main-content">
             <!-- Top Navbar -->
             <div class="top-navbar">
+                <button class="hamburger-btn" id="hamburger_btn" onclick="toggleSidebar()">
+                    <i class="bi bi-list"></i>
+                </button>
                 <div class="navbar-title">
                     <h1>Ajukan Izin / Surat</h1>
                     <p>Pengajuan surat keterangan selama magang</p>
@@ -319,9 +325,44 @@ $user_role = $_SESSION['user_role'] ?? 'siswa';
         .card:hover {
             box-shadow: var(--shadow-md);
         }
+
+        body {
+            overflow-x: hidden;
+        }
     </style>
 
+    <!-- Footer -->
+    <footer style="background: var(--primary); color: white; text-align: center; padding: 1rem; font-size: 0.85rem;">
+        <p style="margin: 0;">
+            <strong>SMKN 1 Perhentian Raja</strong> - Sistem Informasi Magang © 2024
+        </p>
+    </footer>
+
     <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar_overlay');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar_overlay');
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+
+        // Close sidebar when clicking overlay
+        document.getElementById('sidebar_overlay').addEventListener('click', closeSidebar);
+
+        // Close sidebar when pressing Escape
+        document.addEventListener('keydown', function(e) {
+            if(e.key === 'Escape') {
+                closeSidebar();
+            }
+        });
+
         function selectLetter(type) {
             document.getElementById('letter_type').value = type;
             

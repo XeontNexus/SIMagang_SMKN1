@@ -25,39 +25,42 @@ $time_now = date('H:i');
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 </head>
 <body>
+    <!-- Sidebar Overlay (Mobile) -->
+    <div class="sidebar-overlay" id="sidebar_overlay"></div>
+
     <div class="dashboard-container">
         <!-- Sidebar -->
-        <aside class="sidebar">
+        <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <h3><i class="bi bi-mortarboard"></i> SIMagang</h3>
             </div>
             <ul class="sidebar-menu">
                 <li class="sidebar-menu-item">
-                    <a href="dashboard.php" class="sidebar-menu-link">
+                    <a href="dashboard.php" class="sidebar-menu-link" onclick="closeSidebar()">
                         <i class="bi bi-speedometer2"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
                 <li class="sidebar-menu-item">
-                    <a href="logbook.php" class="sidebar-menu-link">
+                    <a href="logbook.php" class="sidebar-menu-link" onclick="closeSidebar()">
                         <i class="bi bi-journal-text"></i>
                         <span>Logbook</span>
                     </a>
                 </li>
                 <li class="sidebar-menu-item">
-                    <a href="presensi.php" class="sidebar-menu-link active">
+                    <a href="presensi.php" class="sidebar-menu-link active" onclick="closeSidebar()">
                         <i class="bi bi-calendar-check"></i>
                         <span>Presensi</span>
                     </a>
                 </li>
                 <li class="sidebar-menu-item">
-                    <a href="pengajuan_izin.php" class="sidebar-menu-link">
+                    <a href="pengajuan_izin.php" class="sidebar-menu-link" onclick="closeSidebar()">
                         <i class="bi bi-file-earmark-plus"></i>
                         <span>Ajukan Izin</span>
                     </a>
                 </li>
                 <li class="sidebar-menu-item">
-                    <a href="profil.php" class="sidebar-menu-link">
+                    <a href="profil.php" class="sidebar-menu-link" onclick="closeSidebar()">
                         <i class="bi bi-person-circle"></i>
                         <span>Profil</span>
                     </a>
@@ -75,6 +78,9 @@ $time_now = date('H:i');
         <main class="main-content">
             <!-- Top Navbar -->
             <div class="top-navbar">
+                <button class="hamburger-btn" id="hamburger_btn" onclick="toggleSidebar()">
+                    <i class="bi bi-list"></i>
+                </button>
                 <div class="navbar-title">
                     <h1>Presensi Realtime</h1>
                     <p>Absen kehadiran harian magang</p>
@@ -113,23 +119,32 @@ $time_now = date('H:i');
                     <!-- Attendance Type Selection -->
                     <div style="margin-bottom: 1.5rem;">
                         <label style="font-weight: 600; color: var(--dark); display: block; margin-bottom: 0.75rem;">Pilih Jenis Kehadiran</label>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
-                            <!-- Absen Biasa -->
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 1rem;">
+                            <!-- Absen Masuk -->
                             <div style="border: 2px solid var(--gray); border-radius: 8px; padding: 1.5rem; text-align: center; cursor: pointer;" id="option_absen">
                                 <div style="font-size: 2rem; color: var(--success); margin-bottom: 0.5rem;">
                                     <i class="bi bi-check-circle"></i>
                                 </div>
-                                <strong>Absen Biasa</strong>
-                                <p style="font-size: 0.85rem; color: var(--gray); margin: 0.5rem 0 0;">Tanpa foto</p>
+                                <strong>Absen Masuk</strong>
+                                <p style="font-size: 0.85rem; color: var(--gray); margin: 0.5rem 0 0;">Jam Masuk</p>
                             </div>
 
-                            <!-- Absen Foto -->
+                            <!-- Absen Foto Masuk -->
                             <div style="border: 2px solid var(--gray); border-radius: 8px; padding: 1.5rem; text-align: center; cursor: pointer;" id="option_foto">
                                 <div style="font-size: 2rem; color: var(--info); margin-bottom: 0.5rem;">
                                     <i class="bi bi-camera"></i>
                                 </div>
-                                <strong>Absen Foto</strong>
-                                <p style="font-size: 0.85rem; color: var(--gray); margin: 0.5rem 0 0;">Dengan foto selfie</p>
+                                <strong>Foto Masuk</strong>
+                                <p style="font-size: 0.85rem; color: var(--gray); margin: 0.5rem 0 0;">Dengan selfie</p>
+                            </div>
+
+                            <!-- Absen Pulang (Checkout) -->
+                            <div style="border: 2px solid var(--gray); border-radius: 8px; padding: 1.5rem; text-align: center; cursor: pointer;" id="option_pulang">
+                                <div style="font-size: 2rem; color: #E67E22; margin-bottom: 0.5rem;">
+                                    <i class="bi bi-box-arrow-right"></i>
+                                </div>
+                                <strong>Absen Pulang</strong>
+                                <p style="font-size: 0.85rem; color: var(--gray); margin: 0.5rem 0 0;">Jam Keluar (Opsional)</p>
                             </div>
 
                             <!-- Izin -->
@@ -153,7 +168,7 @@ $time_now = date('H:i');
                             </div>
                             <div style="display: flex; gap: 1rem;">
                                 <button type="submit" class="btn-primary" style="padding: 0.75rem 2rem; border: none; border-radius: 8px; color: white; cursor: pointer;">
-                                    <i class="bi bi-check-circle"></i> Absen Sekarang
+                                    <i class="bi bi-check-circle"></i> Absen Masuk Sekarang
                                 </button>
                                 <button type="button" onclick="resetForm()" class="btn-secondary" style="padding: 0.75rem 2rem; border: none; border-radius: 8px; color: white; cursor: pointer;">
                                     Batal
@@ -167,7 +182,7 @@ $time_now = date('H:i');
                         <form method="POST" enctype="multipart/form-data">
                             <input type="hidden" name="type" value="foto">
                             <div style="margin-bottom: 1rem;">
-                                <label style="font-weight: 600; color: var(--dark);">Ambil Foto Selfie</label>
+                                <label style="font-weight: 600; color: var(--dark);">Ambil Foto Selfie Masuk</label>
                                 <div style="border: 2px dashed var(--primary); border-radius: 8px; padding: 2rem; text-align: center;">
                                     <video id="video" width="100%" height="300" style="border-radius: 8px; background: black; display: none;"></video>
                                     <canvas id="canvas" width="400" height="300" style="display: none;"></canvas>
@@ -187,7 +202,30 @@ $time_now = date('H:i');
                             </div>
                             <div style="display: flex; gap: 1rem;">
                                 <button type="submit" class="btn-primary" style="padding: 0.75rem 2rem; border: none; border-radius: 8px; color: white; cursor: pointer;">
-                                    <i class="bi bi-check-circle"></i> Absen Dengan Foto
+                                    <i class="bi bi-check-circle"></i> Absen Masuk Dengan Foto
+                                </button>
+                                <button type="button" onclick="resetForm()" class="btn-secondary" style="padding: 0.75rem 2rem; border: none; border-radius: 8px; color: white; cursor: pointer;">
+                                    Batal
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Absen Pulang Form (Checkout) -->
+                    <div id="form_pulang" style="display: none;">
+                        <form method="POST">
+                            <input type="hidden" name="type" value="pulang">
+                            <div style="background: #FFF9E6; border-left: 4px solid #E67E22; padding: 1rem; border-radius: 4px; margin-bottom: 1rem;">
+                                <strong style="color: var(--dark);">ℹ️ Catatan:</strong>
+                                <p style="margin: 0.5rem 0 0; font-size: 0.9rem; color: var(--gray);">Absen pulang bersifat opsional. Anda dapat meninggalkannya kosong jika masih bekerja.</p>
+                            </div>
+                            <div style="margin-bottom: 1rem;">
+                                <label style="font-weight: 600; color: var(--dark);">Tempat Presensi</label>
+                                <input type="text" class="form-control" value="PT. Indonesia" readonly style="background: var(--light);">
+                            </div>
+                            <div style="display: flex; gap: 1rem;">
+                                <button type="submit" class="btn-primary" style="padding: 0.75rem 2rem; border: none; border-radius: 8px; color: white; cursor: pointer; background: #E67E22;">
+                                    <i class="bi bi-box-arrow-right"></i> Absen Pulang
                                 </button>
                                 <button type="button" onclick="resetForm()" class="btn-secondary" style="padding: 0.75rem 2rem; border: none; border-radius: 8px; color: white; cursor: pointer;">
                                     Batal
@@ -251,6 +289,7 @@ $time_now = date('H:i');
                                 <tr>
                                     <th>Tanggal</th>
                                     <th>Jam Masuk</th>
+                                    <th>Jam Pulang</th>
                                     <th>Status</th>
                                     <th>Keterangan</th>
                                 </tr>
@@ -259,23 +298,27 @@ $time_now = date('H:i');
                                 <tr>
                                     <td>03-03-2024</td>
                                     <td>08:15</td>
+                                    <td>17:30</td>
                                     <td><span class="badge" style="background: var(--success); color: white; padding: 0.4rem 0.8rem; border-radius: 4px;">✓ Hadir</span></td>
                                     <td>Absen biasa</td>
                                 </tr>
                                 <tr>
                                     <td>02-03-2024</td>
                                     <td>08:42</td>
+                                    <td>--:--</td>
                                     <td><span class="badge" style="background: var(--warning); color: white; padding: 0.4rem 0.8rem; border-radius: 4px;">⏳ Terlambat</span></td>
                                     <td>Absen dengan foto</td>
                                 </tr>
                                 <tr>
                                     <td>01-03-2024</td>
                                     <td>--:--</td>
+                                    <td>--:--</td>
                                     <td><span class="badge" style="background: var(--info); color: white; padding: 0.4rem 0.8rem; border-radius: 4px;">ℹ️ Izin Sakit</span></td>
                                     <td>Dengan surat keterangan</td>
                                 </tr>
                                 <tr>
                                     <td>29-02-2024</td>
+                                    <td>--:--</td>
                                     <td>--:--</td>
                                     <td><span class="badge" style="background: var(--danger); color: white; padding: 0.4rem 0.8rem; border-radius: 4px;">✕ Alpha</span></td>
                                     <td>Tidak ada bukti izin</td>
@@ -393,9 +436,44 @@ $time_now = date('H:i');
         table tbody tr:hover {
             background: #F9F9F9;
         }
+
+        body {
+            overflow-x: hidden;
+        }
     </style>
 
+    <!-- Footer -->
+    <footer style="background: var(--primary); color: white; text-align: center; padding: 1rem; font-size: 0.85rem;">
+        <p style="margin: 0;">
+            <strong>SMKN 1 Perhentian Raja</strong> - Sistem Informasi Magang © 2024
+        </p>
+    </footer>
+
     <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar_overlay');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar_overlay');
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+
+        // Close sidebar when clicking overlay
+        document.getElementById('sidebar_overlay').addEventListener('click', closeSidebar);
+
+        // Close sidebar when pressing Escape
+        document.addEventListener('keydown', function(e) {
+            if(e.key === 'Escape') {
+                closeSidebar();
+            }
+        });
+
         // Update current time
         function updateTime() {
             const now = new Date();
@@ -417,6 +495,11 @@ $time_now = date('H:i');
             document.getElementById('form_foto').style.display = 'block';
         });
 
+        document.getElementById('option_pulang').addEventListener('click', function() {
+            resetForm();
+            document.getElementById('form_pulang').style.display = 'block';
+        });
+
         document.getElementById('option_izin').addEventListener('click', function() {
             resetForm();
             document.getElementById('form_izin').style.display = 'block';
@@ -425,6 +508,7 @@ $time_now = date('H:i');
         function resetForm() {
             document.getElementById('form_absen').style.display = 'none';
             document.getElementById('form_foto').style.display = 'none';
+            document.getElementById('form_pulang').style.display = 'none';
             document.getElementById('form_izin').style.display = 'none';
         }
 

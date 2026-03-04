@@ -25,39 +25,42 @@ $profile_complete = true; // This should be checked from database
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 </head>
 <body>
+    <!-- Sidebar Overlay (Mobile) -->
+    <div class="sidebar-overlay" id="sidebar_overlay"></div>
+
     <div class="dashboard-container">
         <!-- Sidebar -->
-        <aside class="sidebar">
+        <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <h3><i class="bi bi-mortarboard"></i> SIMagang</h3>
             </div>
             <ul class="sidebar-menu">
                 <li class="sidebar-menu-item">
-                    <a href="dashboard.php" class="sidebar-menu-link">
+                    <a href="dashboard.php" class="sidebar-menu-link" onclick="closeSidebar()">
                         <i class="bi bi-speedometer2"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
                 <li class="sidebar-menu-item">
-                    <a href="logbook.php" class="sidebar-menu-link">
+                    <a href="logbook.php" class="sidebar-menu-link" onclick="closeSidebar()">
                         <i class="bi bi-journal-text"></i>
                         <span>Logbook</span>
                     </a>
                 </li>
                 <li class="sidebar-menu-item">
-                    <a href="presensi.php" class="sidebar-menu-link">
+                    <a href="presensi.php" class="sidebar-menu-link" onclick="closeSidebar()">
                         <i class="bi bi-calendar-check"></i>
                         <span>Presensi</span>
                     </a>
                 </li>
                 <li class="sidebar-menu-item">
-                    <a href="pengajuan_izin.php" class="sidebar-menu-link">
+                    <a href="pengajuan_izin.php" class="sidebar-menu-link" onclick="closeSidebar()">
                         <i class="bi bi-file-earmark-plus"></i>
                         <span>Ajukan Izin</span>
                     </a>
                 </li>
                 <li class="sidebar-menu-item">
-                    <a href="profil.php" class="sidebar-menu-link active">
+                    <a href="profil.php" class="sidebar-menu-link active" onclick="closeSidebar()">
                         <i class="bi bi-person-circle"></i>
                         <span>Profil</span>
                     </a>
@@ -75,6 +78,9 @@ $profile_complete = true; // This should be checked from database
         <main class="main-content">
             <!-- Top Navbar -->
             <div class="top-navbar">
+                <button class="hamburger-btn" id="hamburger_btn" onclick="toggleSidebar()">
+                    <i class="bi bi-list"></i>
+                </button>
                 <div class="navbar-title">
                     <h1>Profil Saya</h1>
                     <p>Kelola data profil dan informasi magang</p>
@@ -121,11 +127,29 @@ $profile_complete = true; // This should be checked from database
                         <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
                             <div>
                                 <label class="form-label" style="font-weight: 600; color: var(--dark);">Kelas <span style="color: var(--danger);">*</span></label>
-                                <input type="text" class="form-control" name="kelas" value="XII RPL 1" required>
+                                <select class="form-control" name="kelas" required>
+                                    <option value="">-- Pilih Kelas --</option>
+                                    <option value="X-1" selected>X-1</option>
+                                    <option value="X-2">X-2</option>
+                                    <option value="X-3">X-3</option>
+                                    <option value="XI-1">XI-1</option>
+                                    <option value="XI-2">XI-2</option>
+                                    <option value="XI-3">XI-3</option>
+                                    <option value="XII-1">XII-1</option>
+                                    <option value="XII-2">XII-2</option>
+                                    <option value="XII-3">XII-3</option>
+                                </select>
                             </div>
                             <div>
                                 <label class="form-label" style="font-weight: 600; color: var(--dark);">Jurusan <span style="color: var(--danger);">*</span></label>
-                                <input type="text" class="form-control" name="jurusan" value="Rekayasa Perangkat Lunak" required>
+                                <select class="form-control" name="jurusan" required>
+                                    <option value="">-- Pilih Jurusan --</option>
+                                    <option value="Rekayasa Perangkat Lunak" selected>Rekayasa Perangkat Lunak</option>
+                                    <option value="Teknik Komputer dan Jaringan">Teknik Komputer dan Jaringan</option>
+                                    <option value="Multimedia">Multimedia</option>
+                                    <option value="Sistem Informasi">Sistem Informasi</option>
+                                    <option value="Perbankan dan Keuangan Digital">Perbankan dan Keuangan Digital</option>
+                                </select>
                             </div>
                             <div>
                                 <label class="form-label" style="font-weight: 600; color: var(--dark);">No. Induk Siswa <span style="color: var(--danger);">*</span></label>
@@ -297,9 +321,44 @@ $profile_complete = true; // This should be checked from database
             margin-bottom: 0.5rem;
             font-size: 0.9rem;
         }
+
+        body {
+            overflow-x: hidden;
+        }
     </style>
 
+    <!-- Footer -->
+    <footer style="background: var(--primary); color: white; text-align: center; padding: 1rem; font-size: 0.85rem;">
+        <p style="margin: 0;">
+            <strong>SMKN 1 Perhentian Raja</strong> - Sistem Informasi Magang © 2024
+        </p>
+    </footer>
+
     <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar_overlay');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar_overlay');
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+
+        // Close sidebar when clicking overlay
+        document.getElementById('sidebar_overlay').addEventListener('click', closeSidebar);
+
+        // Close sidebar when pressing Escape
+        document.addEventListener('keydown', function(e) {
+            if(e.key === 'Escape') {
+                closeSidebar();
+            }
+        });
+
         // Photo preview
         document.getElementById('file_foto').addEventListener('change', function(e) {
             const file = e.target.files[0];
