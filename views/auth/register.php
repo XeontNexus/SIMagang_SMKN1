@@ -130,14 +130,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <span class="input-group-text">
                             <i class="bi bi-lock"></i>
                         </span>
-                        <input 
-                            type="password" 
-                            class="form-control" 
-                            id="password" 
-                            name="password" 
-                            placeholder="Masukkan password (minimal 6 karakter)"
-                            required
-                        >
+                        <div class="password-toggle-wrapper">
+                            <input 
+                                type="password" 
+                                class="form-control" 
+                                id="password" 
+                                name="password" 
+                                placeholder="Masukkan password (minimal 6 karakter)"
+                                required
+                            >
+                            <button type="button" class="password-toggle" onclick="togglePassword('password')">
+                                <i class="bi bi-eye" id="password-toggle-icon"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -147,14 +152,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <span class="input-group-text">
                             <i class="bi bi-lock-fill"></i>
                         </span>
-                        <input 
-                            type="password" 
-                            class="form-control" 
-                            id="confirm_password" 
-                            name="confirm_password" 
-                            placeholder="Konfirmasi password"
-                            required
-                        >
+                        <div class="password-toggle-wrapper">
+                            <input 
+                                type="password" 
+                                class="form-control" 
+                                id="confirm_password" 
+                                name="confirm_password" 
+                                placeholder="Konfirmasi password"
+                                required
+                            >
+                            <button type="button" class="password-toggle" onclick="togglePassword('confirm_password')">
+                                <i class="bi bi-eye" id="confirm_password-toggle-icon"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
 

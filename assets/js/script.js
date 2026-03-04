@@ -6,6 +6,24 @@ const mainContent = document.querySelector('.main-content');
 const toggleSidebar = document.querySelector('.toggle-sidebar');
 const logoutBtn = document.querySelector('.logout-btn');
 
+// Toggle Password Visibility
+function togglePassword(inputId) {
+    const input = document.getElementById(inputId);
+    const icon = document.getElementById(inputId + '-toggle-icon');
+    
+    if (!input || !icon) return;
+    
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('bi-eye');
+        icon.classList.add('bi-eye-slash');
+    } else {
+        input.type = 'password';
+        icon.classList.remove('bi-eye-slash');
+        icon.classList.add('bi-eye');
+    }
+}
+
 // Toggle Sidebar
 if (toggleSidebar) {
     toggleSidebar.addEventListener('click', () => {
