@@ -189,7 +189,7 @@ $user_role = $_SESSION['user_role'] ?? 'siswa';
                         <strong>📢 Pengumuman:</strong> Jadwal monitoring guru pembimbing akan dilaksanakan pada hari Senin, 22 Januari 2024. Pastikan logbook Anda sudah lengkap.
                     </div>
                     <div style="background: #FFF3E0; border-left: 4px solid var(--warning); padding: 1rem; border-radius: 4px;">
-                        <strong>⚠️ Reminder:</strong> Jangan lupa melakukan presensi setiap hari kerja.
+                        <strong>⚠️ Reminder:</strong> Jangan lupa melakukan presensi setiap hari kerja dan upload laporan mingguan.
                     </div>
                 </div>
             </div>

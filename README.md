@@ -65,12 +65,13 @@ SIMagang2/
    - Admin: http://localhost/SIMagang2/admin
 
 6. **Login Credentials**
-   - Role	Email	Password	Dashboard
-Admin	admin@simagang.com	password	/admin/dashboard
-Siswa	siswa@simagang.com	password	/siswa/dashboard
-Guru	guru@simagang.com	password	/guru/dashboard
-Dudi	dudi@simagang.com	password	/dudi/dashboard
-   ```
+
+   Role	Email	Password
+   👨‍🎓 Siswa	test@test.com	test123
+   👨‍🏫 Guru	guru@test.com	guru123
+   🏢 DUDI	dudi@test.com	dudi123
+   👨‍💼 Admin	admin@test.com	admin123
+      ```
 
 ## Fitur
 
